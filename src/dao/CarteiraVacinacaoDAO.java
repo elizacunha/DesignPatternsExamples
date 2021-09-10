@@ -5,13 +5,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import entity.Cachorro;
 import entity.Contato;
+import entity.Vacina;
 import factory.ConnectionFactory;
 
-public class ContatoDAO {
+public class CarteiraVacinacaoDAO {
 	private Connection connection;
 
-	public ContatoDAO() {
+	public CarteiraVacinacaoDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 
@@ -23,19 +25,19 @@ public class ContatoDAO {
 		this.connection = connection;
 	}
 
-	public void adiciona(Contato contato) throws RuntimeException {
-		String sql = "insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
+	public void adiciona(Cachorro cachorro, Vacina vacina) throws RuntimeException {
+		String sql = "insert into carteira_vacinacao (nome,email,endereco,dataNascimento) values (?,?,?,?)";
 
 		try {
 			PreparedStatement stmt = getConnection().prepareStatement(sql);
 
-			stmt.setString(1, contato.getNome());
+			/*stmt.setString(1, contato.getNome());
 			stmt.setString(2, contato.getEmail());
 			stmt.setString(3, contato.getEndereco());
 			stmt.setDate(4, new Date(contato.getDataNascimento().getTimeInMillis()));
 			stmt.execute();
 			stmt.close();
-			getConnection().commit();
+			getConnection().commit();*/
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

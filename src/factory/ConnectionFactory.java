@@ -22,21 +22,24 @@ public class ConnectionFactory {
 	
 	public Connection getConnection() {
 		try {
-			pds = PoolDataSourceFactory.getPoolDataSource();
-
-			// Set the connection factory first before all other properties
-			pds.setConnectionFactoryClassName(CONN_FACTORY_CLASS_NAME);
-			pds.setURL(DB_URL);
-			pds.setUser(DB_USER);
-			pds.setPassword(DB_PASSWORD);
-			pds.setConnectionPoolName("JDBC_UCP_POOL");
-			pds.setInitialPoolSize(5);
-			pds.setMinPoolSize(5);
-			pds.setMaxPoolSize(20);
-
-			Connection conn = pds.getConnection();
+			Connection conn = null;
+			if (pds != null) {
+				pds = PoolDataSourceFactory.getPoolDataSource();
+	
+				// Set the connection factory first before all other properties
+				pds.setConnectionFactoryClassName(CONN_FACTORY_CLASS_NAME);
+				pds.setURL(DB_URL);
+				pds.setUser(DB_USER);
+				pds.setPassword(DB_PASSWORD);
+				pds.setConnectionPoolName("JDBC_UCP_POOL");
+				pds.setInitialPoolSize(5);
+				pds.setMinPoolSize(5);
+				pds.setMaxPoolSize(20);
+			}
+			conn = pds.getConnection();
 			conn.setAutoCommit(false);
 			System.out.println("Conexão aberta");
+			
 			return conn;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
